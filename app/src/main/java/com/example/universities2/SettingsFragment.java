@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.universities2.ui.login.LoginActivity;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
     public SettingsFragment(){
 
     }
@@ -28,7 +28,33 @@ public class SettingsFragment extends Fragment {
 ////                Toast.makeText(getActivity().getApplicationContext(),"تم تسجيل الخروج بنجاح!", Toast.LENGTH_LONG).show();
 //            }
 //        });
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view;
+        view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        Button shareButton = (Button) view.findViewById(R.id.share);
+        shareButton.setOnClickListener(this);
+
+        Button logOut = (Button) view.findViewById(R.id.logout);
+        logOut.setOnClickListener(this);
+        return view;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+            case R.id.share:
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Mohammed's Project");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "www.google.com");
+                shareIntent.setType("text/plain");
+                startActivity(shareIntent);
+                break;
+            case R.id.logout:
+                Toast.makeText(getActivity(), "تم تسجيل الخروج بنجاح", Toast.LENGTH_LONG).show();
+                Intent i=new Intent(getActivity(), LoginActivity.class);
+                startActivity(i);
+        }
     }
 }
